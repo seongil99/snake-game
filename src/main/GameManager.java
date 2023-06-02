@@ -17,7 +17,7 @@ public class GameManager {
 	
 	private final int borderHeight = 5;
 	private final int borderWidth = 5;
-	public int PERIOD = 1000;
+	public int PERIOD = 250;
 	
 	public static GameManager getInstance() {
 		return snakeManager;
@@ -52,11 +52,10 @@ public class GameManager {
 	}
 	
 	public void moveSnake() {
-		int nextX = head.x + SnakeBlock.DIRECTION[head.dir][0];
-		int nextY = head.x + SnakeBlock.DIRECTION[head.dir][1];
-		SnakeBlock nextHeadBlock = new SnakeBlock(nextX, nextY, head.dir);
+		int nextX = head.getX() + SnakeBlock.DIRECTION[head.getDir()][0];
+		int nextY = head.getY() + SnakeBlock.DIRECTION[head.getDir()][1];
+		body.addFirst(new SnakeBlock(nextX, nextY, head.getDir()));
 		body.removeLast();
-		body.addFirst(nextHeadBlock);
 		head = body.getFirst();
 	}
 
