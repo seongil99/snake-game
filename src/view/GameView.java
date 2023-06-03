@@ -68,8 +68,8 @@ public class GameView extends JFrame {
 			if(gameManager.food == null) {
 				gameManager.setFood();
 			}
-
 			if (!gameManager.isGameOver && time % gameManager.PERIOD == 0) {
+				gameManager.changeDirection();
 				if (gameManager.checkEatFood()){
 					score += 1;
 					gameManager.addSnake();
@@ -92,22 +92,22 @@ public class GameView extends JFrame {
 				switch(e.getKeyCode()) {
 					case KeyEvent.VK_UP:
 						if (gameManager.head.getDir() != SnakeBlock.DOWN) {
-							gameManager.changeDirection(SnakeBlock.UP);
+							gameManager.setNextDirection(SnakeBlock.UP);
 						}
 						break;
 					case KeyEvent.VK_DOWN:
 						if (gameManager.head.getDir() != SnakeBlock.UP) {
-							gameManager.changeDirection(SnakeBlock.DOWN);
+							gameManager.setNextDirection(SnakeBlock.DOWN);
 						}
 						break;
 					case KeyEvent.VK_LEFT:
 						if (gameManager.head.getDir() != SnakeBlock.RIGHT) {
-							gameManager.changeDirection(SnakeBlock.LEFT);
+							gameManager.setNextDirection(SnakeBlock.LEFT);
 						}
 						break;
 					case KeyEvent.VK_RIGHT:
 						if (gameManager.head.getDir() != SnakeBlock.LEFT) {
-							gameManager.changeDirection(SnakeBlock.RIGHT);
+							gameManager.setNextDirection(SnakeBlock.RIGHT);
 						}
 						break;
 				}

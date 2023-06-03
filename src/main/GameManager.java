@@ -20,6 +20,8 @@ public class GameManager {
 	private final int borderWidth = 20;
 	public int PERIOD = GameView.REFRESH_PERIOD * 5;
 	public boolean isGameOver = false;
+
+	private int next_dir;
 	
 	public static GameManager getInstance() {
 		return snakeManager;
@@ -61,8 +63,24 @@ public class GameManager {
 		head = body.getFirst();
 	}
 
-	public void changeDirection(int dir) {
-		head.dir = dir;
+	public void changeDirection() {
+		head.dir = next_dir;
+	}
+
+	public void setNextDirection(int dir) {
+		if (head.dir == SnakeBlock.RIGHT && dir == SnakeBlock.LEFT) {
+			return;
+		}
+		if (head.dir == SnakeBlock.LEFT && dir == SnakeBlock.RIGHT) {
+			return;
+		}
+		if (head.dir == SnakeBlock.UP && dir == SnakeBlock.DOWN) {
+			return;
+		}
+		if (head.dir == SnakeBlock.DOWN && dir == SnakeBlock.UP) {
+			return;
+		}
+		next_dir = dir;
 	}
 
 	public void addSnake() {
