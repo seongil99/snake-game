@@ -1,13 +1,10 @@
 package view;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.Timer;
+import javax.swing.*;
 
 import game.SnakeBlock;
 import main.GameManager;
@@ -21,6 +18,11 @@ public class GameView extends JFrame {
 	private static final int PADDING_LEFT = 10;
 	private static final int PADDING_BOTTOM = 50;
 	private static final int PADDING_RIGHT = 10;
+	private static final int REFRESH_RATE = 60;
+	public static final int REFRESH_PERIOD = 1000 / REFRESH_RATE;
+
+	private int score = 0;
+	private int time = 0;
 
 	public GamePanel gamePanel;
 	public GameManager gameManager;
@@ -29,19 +31,27 @@ public class GameView extends JFrame {
 		@Override
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
-			// draw grid
-			g.setColor(Color.WHITE);
-			g.fillRect(PADDING_LEFT, PADDING_TOP, BLOCK_SIZE * ROW, BLOCK_SIZE * COL);
-			g.setColor(Color.BLACK);
-			g.drawRect(PADDING_LEFT, PADDING_TOP, BLOCK_SIZE * ROW, BLOCK_SIZE * COL);
-			for (int i = 0; i < ROW; i++) {
-				for (int j=0; j < COL; j++) {
-					g.drawRect(PADDING_LEFT + BLOCK_SIZE * i, PADDING_TOP + BLOCK_SIZE * j, BLOCK_SIZE, BLOCK_SIZE);
+			if (!gameManager.isGameOver) {
+				// draw grid
+				g.setColor(Color.WHITE);
+				g.fillRect(PADDING_LEFT, PADDING_TOP, BLOCK_SIZE * ROW, BLOCK_SIZE * COL);
+				g.setColor(Color.BLACK);
+				g.drawRect(PADDING_LEFT, PADDING_TOP, BLOCK_SIZE * ROW, BLOCK_SIZE * COL);
+				for (int i = 0; i < ROW; i++) {
+					for (int j = 0; j < COL; j++) {
+						g.drawRect(PADDING_LEFT + BLOCK_SIZE * i, PADDING_TOP + BLOCK_SIZE * j, BLOCK_SIZE, BLOCK_SIZE);
+					}
 				}
+				// draw snake
+				drawSnake(g);
+				// draw food
+				if (gameManager.food != null) {
+					drawFood(g);
+				}
+				// draw game over
+			} else if (gameManager.isGameOver) {
+				drawGameOver(g);
 			}
-			// draw snake
-			drawSnake(g);
-
 		}
 	}
 
@@ -53,12 +63,28 @@ public class GameView extends JFrame {
 
 		gamePanel = new GamePanel();
 
+		Timer timer = new Timer(REFRESH_PERIOD, e -> {
+			time += REFRESH_PERIOD;
+			if(gameManager.food == null) {
+				gameManager.setFood();
+			}
 
-		Timer timer = new Timer(gameManager.PERIOD, e -> {
-			gameManager.moveSnake();
+			if (!gameManager.isGameOver && time % gameManager.PERIOD == 0) {
+				if (gameManager.checkEatFood()){
+					score += 1;
+					gameManager.addSnake();
+					gameManager.setFood();
+				}
+				else {
+					gameManager.moveSnake();
+				}
+			}
+			gameManager.isGameOver = gameManager.checkGameOver();
+			if (gameManager.isGameOver) {
+				((Timer)e.getSource()).stop();
+			}
 			repaint();
 		});
-		timer.start();
 
 		gamePanel.addKeyListener(new KeyListener() {
 			@Override
@@ -86,8 +112,10 @@ public class GameView extends JFrame {
 						break;
 				}
 			}
+
 			@Override
 			public void keyReleased(KeyEvent e) {}
+
 			@Override
 			public void keyTyped(KeyEvent e) {}
 		});
@@ -96,6 +124,7 @@ public class GameView extends JFrame {
 		add(gamePanel);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		timer.start();
 	}
 
 	public void drawSnake(Graphics g) {
@@ -109,6 +138,23 @@ public class GameView extends JFrame {
 					BLOCK_SIZE
 			);
 		}
+	}
+
+	public void drawGameOver(Graphics g) {
+		g.setColor(Color.RED);
+		g.setFont(new Font("Arial", Font.BOLD, 30));
+		int width = g.getFontMetrics().stringWidth("Game Over");
+		g.drawString("Game Over", PADDING_LEFT + BLOCK_SIZE * ROW / 2 - width / 2, PADDING_TOP + BLOCK_SIZE * COL / 2);
+	}
+
+	public void drawFood(Graphics g) {
+		g.setColor(Color.RED);
+		g.fillRect(
+				PADDING_LEFT + gameManager.food.getX() * BLOCK_SIZE,
+				PADDING_TOP + gameManager.food.getY() * BLOCK_SIZE,
+				BLOCK_SIZE,
+				BLOCK_SIZE
+		);
 	}
 
 }
