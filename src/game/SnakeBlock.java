@@ -29,4 +29,15 @@ public class SnakeBlock {
 		return y;
 	}
 
+	public void setDir(int dir) {
+		this.dir = dir;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
 }

@@ -59,4 +59,8 @@ public class GameManager {
 		head = body.getFirst();
 	}
 
+	public void changeDirection(int dir) {
+		head.dir = dir;
+	}
+
 }
