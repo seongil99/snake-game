@@ -3,6 +3,7 @@ package view;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.text.DecimalFormat;
 
 import javax.swing.*;
 
@@ -20,17 +21,34 @@ public class GameView extends JFrame {
 	private static final int PADDING_RIGHT = 10;
 	private static final int REFRESH_RATE = 60;
 	public static final int REFRESH_PERIOD = 1000 / REFRESH_RATE;
+	public static final int SCORE_BOX_HEIGHT = 50;
+	public static final int SCORE_BOX_WIDTH = 200;
+	public static final int GAME_PANEL_WIDTH = PADDING_LEFT + BLOCK_SIZE * COL + PADDING_RIGHT;
+	public static final int GAME_PANEL_HEIGHT = PADDING_TOP + BLOCK_SIZE * ROW + PADDING_BOTTOM + SCORE_BOX_HEIGHT;
 
 	public GamePanel gamePanel;
 	public GameManager gameManager;
 	private Timer timer;
 	private JButton restartButton;
+	private DecimalFormat df = new DecimalFormat("##0.00");
 
 	class GamePanel extends JPanel {
 		@Override
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			if (!gameManager.isGameOver) {
+				// draw score
+				g.setColor(Color.BLACK);
+				g.fillRect(PADDING_LEFT, PADDING_TOP + BLOCK_SIZE * ROW, BLOCK_SIZE * COL, SCORE_BOX_HEIGHT);
+				g.setColor(Color.WHITE);
+				g.setFont(new Font("Arial", Font.BOLD, 20));
+				g.drawString("Score: " + gameManager.getScore(), PADDING_LEFT + 10, PADDING_TOP + BLOCK_SIZE * ROW + 30);
+				// draw time
+				g.setColor(Color.BLACK);
+				g.fillRect(PADDING_LEFT + BLOCK_SIZE * COL - SCORE_BOX_WIDTH, PADDING_TOP + BLOCK_SIZE * ROW, SCORE_BOX_WIDTH, SCORE_BOX_HEIGHT);
+				g.setColor(Color.WHITE);
+				g.setFont(new Font("Arial", Font.BOLD, 20));
+				g.drawString("Time: " + df.format(gameManager.getTime() / 1000.0) , PADDING_LEFT + BLOCK_SIZE * COL - SCORE_BOX_WIDTH + 10, PADDING_TOP + BLOCK_SIZE * ROW + 30);
 				// draw grid
 				g.setColor(Color.WHITE);
 				g.fillRect(PADDING_LEFT, PADDING_TOP, BLOCK_SIZE * ROW, BLOCK_SIZE * COL);
@@ -58,7 +76,7 @@ public class GameView extends JFrame {
 		this.gameManager = manager;
 
 		setTitle("Snake Game");
-		setSize(PADDING_LEFT + PADDING_RIGHT + BLOCK_SIZE * COL, PADDING_TOP + PADDING_BOTTOM + BLOCK_SIZE * ROW);
+		setSize(PADDING_LEFT + PADDING_RIGHT + BLOCK_SIZE * COL, PADDING_TOP + PADDING_BOTTOM + BLOCK_SIZE * ROW + SCORE_BOX_HEIGHT);
 
 		gamePanel = new GamePanel();
 
