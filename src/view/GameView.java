@@ -76,7 +76,7 @@ public class GameView extends JFrame {
 		this.gameManager = manager;
 
 		setTitle("Snake Game");
-		setSize(PADDING_LEFT + PADDING_RIGHT + BLOCK_SIZE * COL, PADDING_TOP + PADDING_BOTTOM + BLOCK_SIZE * ROW + SCORE_BOX_HEIGHT);
+		setSize(GAME_PANEL_WIDTH, GAME_PANEL_HEIGHT);
 
 		gamePanel = new GamePanel();
 
