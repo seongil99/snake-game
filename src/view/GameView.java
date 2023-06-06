@@ -59,12 +59,12 @@ public class GameView extends JFrame {
 						g.drawRect(PADDING_LEFT + BLOCK_SIZE * i, PADDING_TOP + BLOCK_SIZE * j, BLOCK_SIZE, BLOCK_SIZE);
 					}
 				}
-				// draw snake
-				drawSnake(g);
 				// draw food
 				if (gameManager.food != null) {
 					drawFood(g);
 				}
+				// draw snake
+				drawSnake(g);
 				// draw game over
 			} else if (gameManager.isGameOver) {
 				drawGameOver(g);
