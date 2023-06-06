@@ -21,11 +21,10 @@ public class GameView extends JFrame {
 	private static final int REFRESH_RATE = 60;
 	public static final int REFRESH_PERIOD = 1000 / REFRESH_RATE;
 
-	private int score = 0;
-	private int time = 0;
-
 	public GamePanel gamePanel;
 	public GameManager gameManager;
+	private Timer timer;
+	private JButton restartButton;
 
 	class GamePanel extends JPanel {
 		@Override
@@ -63,15 +62,15 @@ public class GameView extends JFrame {
 
 		gamePanel = new GamePanel();
 
-		Timer timer = new Timer(REFRESH_PERIOD, e -> {
-			time += REFRESH_PERIOD;
+		timer = new Timer(REFRESH_PERIOD, e -> {
+			gameManager.setTime(gameManager.getTime() + REFRESH_PERIOD);
 			if(gameManager.food == null) {
 				gameManager.setFood();
 			}
-			if (!gameManager.isGameOver && time % gameManager.PERIOD == 0) {
+			if (!gameManager.isGameOver && gameManager.getTime() % gameManager.PERIOD == 0) {
 				gameManager.changeDirection();
 				if (gameManager.checkEatFood()){
-					score += 1;
+					gameManager.setScore(gameManager.getScore() + 1);
 					gameManager.addSnake();
 					gameManager.setFood();
 				}
@@ -145,6 +144,20 @@ public class GameView extends JFrame {
 		g.setFont(new Font("Arial", Font.BOLD, 30));
 		int width = g.getFontMetrics().stringWidth("Game Over");
 		g.drawString("Game Over", PADDING_LEFT + BLOCK_SIZE * ROW / 2 - width / 2, PADDING_TOP + BLOCK_SIZE * COL / 2);
+		if (restartButton == null) {
+			restartButton = new JButton("Restart");
+			restartButton.addActionListener(e -> {
+				gameManager.restartGame();
+				gamePanel.requestFocusInWindow();
+				timer.restart();
+				gamePanel.remove((JButton) (e.getSource()));
+				gamePanel.revalidate();
+				gamePanel.repaint();
+				restartButton = null;
+			});
+		}
+		restartButton.setBounds(PADDING_LEFT + BLOCK_SIZE * ROW / 2 - 50, PADDING_TOP + BLOCK_SIZE * COL / 2 + 50, 100, 50);
+		gamePanel.add(restartButton);
 	}
 
 	public void drawFood(Graphics g) {

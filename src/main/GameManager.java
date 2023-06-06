@@ -22,16 +22,37 @@ public class GameManager {
 	public boolean isGameOver = false;
 
 	private int next_dir;
-	
+	private int score;
+	private int time;
+
+	public void setTime(int time) {
+		this.time = time;
+	}
+
+	public int getTime() {
+		return time;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
 	public static GameManager getInstance() {
 		return snakeManager;
 	}
 	
 	public void initGame() {
-		body.removeAll(body);
+		body = new LinkedList<SnakeBlock>();
 		body.add(new SnakeBlock(1, 1, SnakeBlock.RIGHT));
 		body.add(new SnakeBlock(2, 1, SnakeBlock.RIGHT));
+		next_dir = SnakeBlock.RIGHT;
 		head = body.getFirst();
+		score = 0;
+		time = 0;
 	}
 	
 	public boolean checkCollisionWithSelf() {
@@ -107,6 +128,11 @@ public class GameManager {
 
 	public void setPeriod(int period) {
 		PERIOD = period;
+	}
+
+	public void restartGame() {
+		isGameOver = false;
+		initGame();
 	}
 
 }
