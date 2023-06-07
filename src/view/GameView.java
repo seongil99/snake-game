@@ -53,9 +53,9 @@ public class GameView extends JFrame {
                 g.setFont(new Font("Arial", Font.BOLD, 20));
                 g.drawString("Time: " + df.format(gameManager.getTime() / 1000.0), PADDING_LEFT + BLOCK_SIZE * COL - SCORE_BOX_WIDTH + 10, PADDING_TOP + BLOCK_SIZE * ROW + 30);
                 // draw best score
-                g.setColor(Color.BLACK);
+                g.setColor(Color.YELLOW);
                 g.fillRect(PADDING_LEFT + SCORE_BOX_WIDTH / 2, PADDING_TOP + BLOCK_SIZE * ROW + SCORE_BOX_HEIGHT, BEST_SCORE_BOX_WIDTH, BEST_SCORE_BOX_HEIGHT);
-                g.setColor(Color.WHITE);
+                g.setColor(Color.BLACK);
                 g.setFont(new Font("Arial", Font.BOLD, 20));
                 g.drawString("Best Score: " + gameManager.getBestScore().getScore() + " (" + df.format(gameManager.getBestScore().getTime() / 1000.0) + "s)", PADDING_LEFT + BEST_SCORE_BOX_WIDTH / 2, PADDING_TOP + BLOCK_SIZE * ROW + SCORE_BOX_HEIGHT + 30);
                 // draw grid
