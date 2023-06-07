@@ -23,8 +23,10 @@ public class GameView extends JFrame {
 	public static final int REFRESH_PERIOD = 1000 / REFRESH_RATE;
 	public static final int SCORE_BOX_HEIGHT = 50;
 	public static final int SCORE_BOX_WIDTH = 200;
+	public static final int BEST_SCORE_BOX_WIDTH = 300;
+	public static final int BEST_SCORE_BOX_HEIGHT = 50;
 	public static final int GAME_PANEL_WIDTH = PADDING_LEFT + BLOCK_SIZE * COL + PADDING_RIGHT;
-	public static final int GAME_PANEL_HEIGHT = PADDING_TOP + BLOCK_SIZE * ROW + PADDING_BOTTOM + SCORE_BOX_HEIGHT;
+	public static final int GAME_PANEL_HEIGHT = PADDING_TOP + BLOCK_SIZE * ROW + PADDING_BOTTOM + SCORE_BOX_HEIGHT + BEST_SCORE_BOX_HEIGHT;
 
 	public GamePanel gamePanel;
 	public GameManager gameManager;
@@ -50,6 +52,12 @@ public class GameView extends JFrame {
 				g.setColor(Color.WHITE);
 				g.setFont(new Font("Arial", Font.BOLD, 20));
 				g.drawString("Time: " + df.format(gameManager.getTime() / 1000.0) , PADDING_LEFT + BLOCK_SIZE * COL - SCORE_BOX_WIDTH + 10, PADDING_TOP + BLOCK_SIZE * ROW + 30);
+				// draw best score
+				g.setColor(Color.BLACK);
+				g.fillRect(PADDING_LEFT + SCORE_BOX_WIDTH / 2, PADDING_TOP + BLOCK_SIZE * ROW + SCORE_BOX_HEIGHT, BEST_SCORE_BOX_WIDTH, BEST_SCORE_BOX_HEIGHT);
+				g.setColor(Color.WHITE);
+				g.setFont(new Font("Arial", Font.BOLD, 20));
+				g.drawString("Best Score: " + gameManager.getBestScore().getScore() + " (" + df.format(gameManager.getBestScore().getTime() / 1000.0) + "s)", PADDING_LEFT + BEST_SCORE_BOX_WIDTH / 2, PADDING_TOP + BLOCK_SIZE * ROW + SCORE_BOX_HEIGHT + 30);
 				// draw grid
 				g.setColor(Color.WHITE);
 				g.fillRect(PADDING_LEFT, PADDING_TOP, BLOCK_SIZE * ROW, BLOCK_SIZE * COL);
