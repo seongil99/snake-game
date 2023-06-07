@@ -30,6 +30,7 @@ public class GameView extends JFrame {
 	public GameManager gameManager;
 	private Timer timer;
 	private JButton restartButton;
+	private JButton exitButton;
 	private DecimalFormat df = new DecimalFormat("##0.00");
 
 	class GamePanel extends JPanel {
@@ -169,13 +170,23 @@ public class GameView extends JFrame {
 				gamePanel.requestFocusInWindow();
 				timer.restart();
 				gamePanel.remove((JButton) (e.getSource()));
+				gamePanel.remove(exitButton);
 				gamePanel.revalidate();
 				gamePanel.repaint();
 				restartButton = null;
+				exitButton = null;
 			});
 		}
 		restartButton.setBounds(PADDING_LEFT + BLOCK_SIZE * ROW / 2 - 50, PADDING_TOP + BLOCK_SIZE * COL / 2 + 50, 100, 50);
 		gamePanel.add(restartButton);
+		if (exitButton == null) {
+			exitButton = new JButton("Exit");
+			exitButton.addActionListener(e -> {
+				System.exit(0);
+			});
+		}
+		exitButton.setBounds(PADDING_LEFT + BLOCK_SIZE * ROW / 2 - 50, PADDING_TOP + BLOCK_SIZE * COL / 2 + 110, 100, 50);
+		gamePanel.add(exitButton);
 	}
 
 	public void drawFood(Graphics g) {
