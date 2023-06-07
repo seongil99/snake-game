@@ -7,9 +7,9 @@ public class SnakeBlock {
     public final static int UP = 2;
     public final static int DOWN = 3;
     public final static int[][] DIRECTION = {{1, 0}, {-1, 0}, {0, -1}, {0, 1}};
-
-    public SnakeBlock() {
-    }
+    private final int x;
+    private final int y;
+    private int dir;
 
     public SnakeBlock(int x, int y, int dir) {
         this.x = x;
@@ -17,12 +17,12 @@ public class SnakeBlock {
         this.dir = dir;
     }
 
-    public int x;
-    public int y;
-    public int dir;
-
     public int getDir() {
         return dir;
+    }
+
+    public void setDir(int dir) {
+        this.dir = dir;
     }
 
     public int getX() {
@@ -33,15 +33,4 @@ public class SnakeBlock {
         return y;
     }
 
-    public void setDir(int dir) {
-        this.dir = dir;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
 }

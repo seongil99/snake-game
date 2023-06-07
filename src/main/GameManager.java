@@ -1,47 +1,47 @@
 package main;
 
-import java.util.LinkedList;
-import java.util.Optional;
-
 import game.Score;
 import game.SnakeBlock;
 import view.GameView;
 
+import java.util.LinkedList;
+import java.util.Optional;
+
 public class GameManager {
 
-    private GameManager() {
-    }
-
-    private static GameManager snakeManager = new GameManager();
-
-    public LinkedList<SnakeBlock> body = new LinkedList<SnakeBlock>();
-    public SnakeBlock head;
-    public SnakeBlock food;
-    private Score bestScore = new Score();
-
+    private static final GameManager snakeManager = new GameManager();
+    private final Score bestScore = new Score();
     private final int borderHeight = 20;
     private final int borderWidth = 20;
+    public LinkedList<SnakeBlock> body = new LinkedList<>();
+    public SnakeBlock head;
+    public SnakeBlock food;
     public int PERIOD = GameView.REFRESH_PERIOD * 5;
     public boolean isGameOver = false;
-
     private int next_dir;
     private int score;
     private int time;
+    private GameManager() {
+    }
 
-    public void setTime(int time) {
-        this.time = time;
+    public static GameManager getInstance() {
+        return snakeManager;
     }
 
     public int getTime() {
         return time;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void setTime(int time) {
+        this.time = time;
     }
 
     public int getScore() {
         return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public void setBestScore(int score, int time) {
@@ -53,12 +53,8 @@ public class GameManager {
         return bestScore;
     }
 
-    public static GameManager getInstance() {
-        return snakeManager;
-    }
-
     public void initGame() {
-        body = new LinkedList<SnakeBlock>();
+        body = new LinkedList<>();
         body.add(new SnakeBlock(1, 1, SnakeBlock.RIGHT));
         body.add(new SnakeBlock(2, 1, SnakeBlock.RIGHT));
         next_dir = SnakeBlock.RIGHT;
@@ -77,11 +73,7 @@ public class GameManager {
     }
 
     public boolean checkCollisionWithWall(int boardWidth, int boardHeight) {
-        if (head.getX() < 0 || head.getX() >= boardWidth || head.getY() < 0 || head.getY() >= boardHeight) {
-            return true;
-        }
-
-        return false;
+        return head.getX() < 0 || head.getX() >= boardWidth || head.getY() < 0 || head.getY() >= boardHeight;
     }
 
     public boolean checkGameOver() {
@@ -97,20 +89,20 @@ public class GameManager {
     }
 
     public void changeDirection() {
-        head.dir = next_dir;
+        head.setDir(next_dir);
     }
 
     public void setNextDirection(int dir) {
-        if (head.dir == SnakeBlock.RIGHT && dir == SnakeBlock.LEFT) {
+        if (head.getDir() == SnakeBlock.RIGHT && dir == SnakeBlock.LEFT) {
             return;
         }
-        if (head.dir == SnakeBlock.LEFT && dir == SnakeBlock.RIGHT) {
+        if (head.getDir() == SnakeBlock.LEFT && dir == SnakeBlock.RIGHT) {
             return;
         }
-        if (head.dir == SnakeBlock.UP && dir == SnakeBlock.DOWN) {
+        if (head.getDir() == SnakeBlock.UP && dir == SnakeBlock.DOWN) {
             return;
         }
-        if (head.dir == SnakeBlock.DOWN && dir == SnakeBlock.UP) {
+        if (head.getDir() == SnakeBlock.DOWN && dir == SnakeBlock.UP) {
             return;
         }
         next_dir = dir;

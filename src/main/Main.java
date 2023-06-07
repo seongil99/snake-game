@@ -8,7 +8,7 @@ public class Main {
 
         GameManager gameManager = GameManager.getInstance();
         gameManager.initGame();
-        GameView mainView = new GameView(gameManager);
+        new GameView(gameManager);
     }
 
 }
