@@ -120,10 +120,24 @@ public class GameView extends JFrame {
     }
 
     public void drawGameOver(Graphics g) {
+        int width;
         g.setColor(Color.RED);
-        g.setFont(new Font("Arial", Font.BOLD, 30));
-        int width = g.getFontMetrics().stringWidth("Game Over");
-        g.drawString("Game Over", PADDING_LEFT + BLOCK_SIZE * ROW / 2 - width / 2, PADDING_TOP + BLOCK_SIZE * COL / 2);
+        g.setFont(new Font("Arial", Font.BOLD, 40));
+        width = g.getFontMetrics().stringWidth("Game Over");
+        g.drawString("Game Over", PADDING_LEFT + BLOCK_SIZE * ROW / 2 - width / 2, PADDING_TOP + BLOCK_SIZE * COL / 3);
+        // draw score
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Arial", Font.BOLD, 20));
+        width = g.getFontMetrics().stringWidth("Score: " + gameManager.getScore() +" ("+ df.format(gameManager.getTime() / 1000.0) + "s)");
+        g.drawString("Score: " + gameManager.getScore() +" ("+ df.format(gameManager.getTime() / 1000.0) + "s)", PADDING_LEFT + BLOCK_SIZE * ROW / 2 - width / 2, PADDING_TOP + BLOCK_SIZE * COL / 2);
+        // if new best score, draw new best score
+        if (gameManager.getScore() > gameManager.getBestScore().getScore()) {
+            g.setColor(Color.RED);
+            g.setFont(new Font("Arial", Font.BOLD, 15));
+            width = g.getFontMetrics().stringWidth("New Best Score: " + gameManager.getScore());
+            g.drawString("New Best Score!!", PADDING_LEFT + BLOCK_SIZE * ROW / 2 - width / 2, PADDING_TOP + BLOCK_SIZE * COL / 2 - 20);
+        }
+        // draw restart and exit button
         if (restartButton == null) {
             restartButton = new JButton("Restart");
             restartButton.addActionListener(e -> {
