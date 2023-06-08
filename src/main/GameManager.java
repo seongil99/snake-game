@@ -1,8 +1,8 @@
 package main;
 
-import game.Score;
-import game.SnakeBlock;
-import view.GameView;
+import main.game.Score;
+import main.game.SnakeBlock;
+import main.view.GameFrame;
 
 import java.util.LinkedList;
 import java.util.Optional;
@@ -16,7 +16,7 @@ public class GameManager {
     public LinkedList<SnakeBlock> body = new LinkedList<>();
     public SnakeBlock head;
     public SnakeBlock food;
-    public int PERIOD = GameView.REFRESH_PERIOD * 5;
+    public int PERIOD = GameFrame.REFRESH_PERIOD * 5;
     public boolean isGameOver = false;
     public boolean isPaused = false;
     public boolean isMainScreen = true;

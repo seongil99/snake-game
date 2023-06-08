@@ -1,7 +1,7 @@
-package view;
+package main.view;
 
-import game.SnakeBlock;
 import main.GameManager;
+import main.game.SnakeBlock;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.text.DecimalFormat;
 
-public class GameView extends JFrame {
+public class GameFrame extends JFrame {
 
     public static final int SCORE_BOX_HEIGHT = 50;
     public static final int SCORE_BOX_WIDTH = 200;
@@ -34,7 +34,7 @@ public class GameView extends JFrame {
     private JButton exitButton;
     private JButton startButton;
 
-    public GameView(GameManager manager) {
+    public GameFrame(GameManager manager) {
         this.gameManager = manager;
 
         setTitle("Snake Game");

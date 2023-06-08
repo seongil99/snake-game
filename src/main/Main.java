@@ -1,6 +1,6 @@
 package main;
 
-import view.GameView;
+import main.view.GameFrame;
 
 public class Main {
 
@@ -8,7 +8,7 @@ public class Main {
 
         GameManager gameManager = GameManager.getInstance();
         gameManager.initGame();
-        new GameView(gameManager);
+        new GameFrame(gameManager);
     }
 
 }
