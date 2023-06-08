@@ -88,6 +88,17 @@ public class GameView extends JFrame {
                             gameManager.setNextDirection(SnakeBlock.RIGHT);
                         }
                     }
+                    case KeyEvent.VK_ESCAPE -> {
+                        if (!gameManager.isPaused) {
+                            gameManager.isPaused = true;
+                            repaint();
+                            timer.stop();
+                        } else {
+                            gameManager.isPaused = false;
+                            repaint();
+                            timer.start();
+                        }
+                    }
                 }
             }
 
@@ -128,8 +139,8 @@ public class GameView extends JFrame {
         // draw score
         g.setColor(Color.BLACK);
         g.setFont(new Font("Arial", Font.BOLD, 20));
-        width = g.getFontMetrics().stringWidth("Score: " + gameManager.getScore() +" ("+ df.format(gameManager.getTime() / 1000.0) + "s)");
-        g.drawString("Score: " + gameManager.getScore() +" ("+ df.format(gameManager.getTime() / 1000.0) + "s)", PADDING_LEFT + BLOCK_SIZE * ROW / 2 - width / 2, PADDING_TOP + BLOCK_SIZE * COL / 2);
+        width = g.getFontMetrics().stringWidth("Score: " + gameManager.getScore() + " (" + df.format(gameManager.getTime() / 1000.0) + "s)");
+        g.drawString("Score: " + gameManager.getScore() + " (" + df.format(gameManager.getTime() / 1000.0) + "s)", PADDING_LEFT + BLOCK_SIZE * ROW / 2 - width / 2, PADDING_TOP + BLOCK_SIZE * COL / 2);
         // if new best score, draw new best score
         if (gameManager.getScore() > gameManager.getBestScore().getScore()) {
             g.setColor(Color.RED);
@@ -201,10 +212,9 @@ public class GameView extends JFrame {
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            if (gameManager.isMainScreen){
+            if (gameManager.isMainScreen) {
                 drawMainScreen(g);
-            }
-            else if (!gameManager.isGameOver) {
+            } else if (!gameManager.isGameOver) {
                 // draw score
                 g.setColor(Color.BLACK);
                 g.fillRect(PADDING_LEFT, PADDING_TOP + BLOCK_SIZE * ROW, BLOCK_SIZE * COL, SCORE_BOX_HEIGHT);
@@ -239,7 +249,17 @@ public class GameView extends JFrame {
                 }
                 // draw snake
                 drawSnake(g);
-                // draw game over
+                // draw pause string in the center of the screen
+                if (gameManager.isPaused) {
+                    //draw box
+                    g.setColor(Color.BLACK);
+                    g.fillRect(PADDING_LEFT + BLOCK_SIZE * ROW / 2 - 100, PADDING_TOP + BLOCK_SIZE * COL / 2 - 50, 200, 75);
+                    //draw string
+                    g.setColor(Color.YELLOW);
+                    g.setFont(new Font("Arial", Font.BOLD, 40));
+                    int width = g.getFontMetrics().stringWidth("Paused");
+                    g.drawString("Paused", PADDING_LEFT + BLOCK_SIZE * ROW / 2 - width / 2, PADDING_TOP + BLOCK_SIZE * COL / 2);
+                }
             } else {
                 drawGameOver(g);
             }

@@ -23,6 +23,7 @@ public class GameManager {
     private int next_dir;
     private int score;
     private int time;
+
     private GameManager() {
     }
 
