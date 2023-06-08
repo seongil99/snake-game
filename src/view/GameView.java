@@ -32,6 +32,7 @@ public class GameView extends JFrame {
     public GameManager gameManager;
     private JButton restartButton;
     private JButton exitButton;
+    private JButton startButton;
 
     public GameView(GameManager manager) {
         this.gameManager = manager;
@@ -103,7 +104,6 @@ public class GameView extends JFrame {
         add(gamePanel);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        timer.start();
     }
 
     public void drawSnake(Graphics g) {
@@ -172,11 +172,39 @@ public class GameView extends JFrame {
         );
     }
 
+    public void drawMainScreen(Graphics g) {
+        int width;
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Arial", Font.BOLD, 40));
+        width = g.getFontMetrics().stringWidth("Snake Game");
+        g.drawString("Snake Game", PADDING_LEFT + BLOCK_SIZE * ROW / 2 - width / 2, PADDING_TOP + BLOCK_SIZE * COL / 2);
+        // draw start button
+        if (startButton == null) {
+            startButton = new JButton("Start");
+            startButton.addActionListener(e -> {
+                gameManager.initGame();
+                gamePanel.requestFocusInWindow();
+                gamePanel.remove((JButton) (e.getSource()));
+                gamePanel.revalidate();
+                gamePanel.repaint();
+                startButton = null;
+                gameManager.isMainScreen = false;
+                timer.start();
+            });
+        }
+        startButton.setBounds(PADDING_LEFT + BLOCK_SIZE * ROW / 2 - 50, PADDING_TOP + BLOCK_SIZE * COL / 2 + 50, 100, 50);
+        gamePanel.add(startButton);
+    }
+
+
     class GamePanel extends JPanel {
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            if (!gameManager.isGameOver) {
+            if (gameManager.isMainScreen){
+                drawMainScreen(g);
+            }
+            else if (!gameManager.isGameOver) {
                 // draw score
                 g.setColor(Color.BLACK);
                 g.fillRect(PADDING_LEFT, PADDING_TOP + BLOCK_SIZE * ROW, BLOCK_SIZE * COL, SCORE_BOX_HEIGHT);

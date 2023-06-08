@@ -18,6 +18,8 @@ public class GameManager {
     public SnakeBlock food;
     public int PERIOD = GameView.REFRESH_PERIOD * 5;
     public boolean isGameOver = false;
+    public boolean isPaused = false;
+    public boolean isMainScreen = true;
     private int next_dir;
     private int score;
     private int time;
