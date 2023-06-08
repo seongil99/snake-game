@@ -205,6 +205,11 @@ public class GameFrame extends JFrame {
         }
         startButton.setBounds(PADDING_LEFT + BLOCK_SIZE * ROW / 2 - 50, PADDING_TOP + BLOCK_SIZE * COL / 2 + 50, 100, 50);
         gamePanel.add(startButton);
+        // add manual string
+        g.setFont(new Font("Arial", Font.PLAIN, 20));
+        g.setColor(Color.BLACK);
+        g.drawString("Move: LEFT, RIGHT, UP, DOWN", PADDING_LEFT + ROW * 3, PADDING_TOP + BLOCK_SIZE * COL + 60);
+        g.drawString("Pause: ESC", PADDING_LEFT + ROW * 3, PADDING_TOP + BLOCK_SIZE * COL + 60 + 30);
     }
 
 
