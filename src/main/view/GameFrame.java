@@ -128,6 +128,33 @@ public class GameFrame extends JFrame {
                     BLOCK_SIZE
             );
         }
+        // draw eyes
+        g.setColor(Color.WHITE);
+        g.fillRect(
+                PADDING_LEFT + gameManager.head.getX() * BLOCK_SIZE + BLOCK_SIZE / 4,
+                PADDING_TOP + gameManager.head.getY() * BLOCK_SIZE + BLOCK_SIZE / 4,
+                BLOCK_SIZE / 3,
+                BLOCK_SIZE / 3
+        );
+        g.fillRect(
+                PADDING_LEFT + gameManager.head.getX() * BLOCK_SIZE + BLOCK_SIZE / 4 * 3,
+                PADDING_TOP + gameManager.head.getY() * BLOCK_SIZE + BLOCK_SIZE / 4,
+                BLOCK_SIZE / 3,
+                BLOCK_SIZE / 3
+        );
+        g.setColor(Color.BLACK);
+        g.fillRect(
+                PADDING_LEFT + gameManager.head.getX() * BLOCK_SIZE + BLOCK_SIZE / 4 + BLOCK_SIZE / 8,
+                PADDING_TOP + gameManager.head.getY() * BLOCK_SIZE + BLOCK_SIZE / 4 + BLOCK_SIZE / 8,
+                BLOCK_SIZE / 6,
+                BLOCK_SIZE / 6
+        );
+        g.fillRect(
+                PADDING_LEFT + gameManager.head.getX() * BLOCK_SIZE + BLOCK_SIZE / 4 * 3 + BLOCK_SIZE / 8,
+                PADDING_TOP + gameManager.head.getY() * BLOCK_SIZE + BLOCK_SIZE / 4 + BLOCK_SIZE / 8,
+                BLOCK_SIZE / 6,
+                BLOCK_SIZE / 6
+        );
     }
 
     public void drawGameOver(Graphics g) {
