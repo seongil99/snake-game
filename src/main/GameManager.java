@@ -62,6 +62,7 @@ public class GameManager {
         body.add(new SnakeBlock(2, 1, SnakeBlock.RIGHT));
         next_dir = SnakeBlock.RIGHT;
         head = body.getFirst();
+        isPaused = false;
         score = 0;
         time = 0;
     }
