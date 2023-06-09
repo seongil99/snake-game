@@ -39,6 +39,8 @@ public class GameFrame extends JFrame {
 
         setTitle("Snake Game");
         setSize(GAME_PANEL_WIDTH, GAME_PANEL_HEIGHT);
+        setResizable(false);
+        setLocationRelativeTo(null);
 
         gamePanel = new GamePanel();
 
